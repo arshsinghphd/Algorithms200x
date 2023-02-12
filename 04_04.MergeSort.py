@@ -1,5 +1,4 @@
 def merge(arr1, arr2):
-    len_n = len(arr1) + len(arr2)
     merged_arr = []
     while arr1 and arr2:
         if arr1[0] >= arr2[0]:
