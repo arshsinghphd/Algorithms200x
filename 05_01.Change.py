@@ -13,12 +13,11 @@ def get_change(m):
         
     for amt in range(min(coins), m):
         for c in coins:
-            if amt in dict_m:
-                if amt + c in dict_m:
-                    if dict_m[amt + c] > dict_m[amt] + 1:
-                        dict_m[amt + c] = dict_m[amt] + 1
-                else:
-                    dict_m[amt + c] = dict_m[amt] + 1
+            if amt + c in dict_m:
+                if dict_m.get(amt + c) > dict_m.get(amt) + 1:
+                    dict_m[amt + c] = dict_m.get(amt) + 1
+            else:
+                dict_m[amt + c] = dict_m.get(amt) + 1
 
     #print(sorted([i for i in zip(dict_m.keys(), dict_m.values())], key=lambda x: x[0]))
         
