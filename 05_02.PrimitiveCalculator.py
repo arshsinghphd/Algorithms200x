@@ -17,16 +17,15 @@ def optimal_sequence(n):
     for i in range(0,n):
         for action in actions:
             j = action(i)
-            if j <= n:
+            if 0 < j <= n:
                 if list_seq[j] == [0]:
                     temp = list_seq[i].copy()
                     temp.append(j)
                     list_seq[j] = temp
-                else:
-                    if len(list_seq[j]) > len(list_seq[i]) + 1:
-                        temp = list_seq[i].copy()
-                        temp.append(j)
-                        list_seq[j] = temp
+                elif len(list_seq[j]) > len(list_seq[i]) + 1:
+                    temp = list_seq[i].copy()
+                    temp.append(j)
+                    list_seq[j] = temp
     return list_seq[n]
 
 if __name__ == '__main__':
