@@ -1,22 +1,27 @@
-def partition3(array):
-    if sum(array) % 3 != 0:
-        return 0
-    else:
-        fair_share = sum(array) // 3
-        table = {(0, 0): True}
-        for i in range(len(array)):
-            for (x, y) in table.copy():
-                table[(x + array[i], y)] = True
-                table[(x, y + array[i])] = True
-        if (fair_share, fair_share) in table:
-            return 1
-        else:
-            return 0
+from itertools import product
+
+def split(values):
+    v, n = sum(values), len(values)
+    if v % 3 != 0:
+        return False
+    v = v // 3
+
+    table = [[[False for _ in range(v + 1)]
+              for _ in range(v + 1)] for _ in range(n + 1)]
+    table[0][0][0] = True
+
+    for i in range(1, n + 1):
+        for s1, s2 in product(range(v + 1), repeat=2):
+            table[i][s1][s2] = table[i - 1][s1][s2]
+            if s1 >= values[i - 1]:
+                table[i][s1][s2] |= table[i - 1][s1 - values[i - 1]][s2]
+            if s2 >= values[i - 1]:
+                table[i][s1][s2] |= table[i - 1][s1][s2 - values[i - 1]]
+
+    return table[n][v][v]
 
 if __name__ == '__main__':
-    input = sys.stdin.read()
-    input = list(map(int, input.split()))
-    n = input[0]
-    A = input[1:]
-    print(partition3(A))
+    n = input()
+    values = list(map(int, input().split()))
+    print(1 if split(values) else 0)
 
